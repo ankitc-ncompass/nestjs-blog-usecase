@@ -1,0 +1,19 @@
+import { User } from "src/users/user.entity";
+import { Column, Entity, OneToMany, PrimaryColumn, ManyToOne } from "typeorm";
+@Entity({ name: 'topics' })
+export class Topic {
+    @PrimaryColumn()
+    id: string;
+    
+    @Column()
+    name: string;
+    
+    @Column()
+    description : string;
+
+    @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+    createdAt: Date;
+
+    @ManyToOne(()=>User)
+    user_ : string;
+}

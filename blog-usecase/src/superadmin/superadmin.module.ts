@@ -12,16 +12,16 @@ import { ConfigModule, ConfigService } from '@nestjs/config'; // Import ConfigMo
   imports:[
     TypeOrmModule.forFeature([SuperAdmin, User]),
     JwtModule.registerAsync({
-      imports: [ConfigModule], // Import ConfigModule here
+      imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => ({
-        secret: configService.get('JWT_SECRET'), // Get JWT_SECRET from environment variables
+        secret: configService.get('JWT_SECRET'), 
         signOptions: { expiresIn: '1d' },
       }),
-      inject: [ConfigService], // Inject ConfigService into the factory function
+      inject: [ConfigService], 
     }),
-    ConfigModule.forRoot(), // Import ConfigModule.forRoot() to load environment variables
+    ConfigModule.forRoot(),
   ],
   controllers: [SuperAdminController],
-  providers: [SuperAdminService, AuthGuard, ConfigService], // Add ConfigService to providers
+  providers: [SuperAdminService, AuthGuard, ConfigService], 
 })
 export class SuperAdminModule {}

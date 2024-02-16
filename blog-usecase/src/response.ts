@@ -17,6 +17,10 @@ export class CustomResponse {
   
     constructor(statusCode: number, message: string) {
       super(message);
+      //console.log(statusCode);
+      
       this.statusCode = statusCode;
+    
+      //console.log(statusCode);
     }
   }

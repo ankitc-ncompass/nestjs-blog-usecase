@@ -12,6 +12,7 @@ import {TypeOrmModule } from '@nestjs/typeorm'
 import { SuperAdminModule } from './superadmin/superadmin.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { TopicModule } from './topics/topic.module';
 
 
 @Module({
@@ -29,6 +30,7 @@ import { AppService } from './app.service';
     }),
     UserModule,
     SuperAdminModule,
+    TopicModule
   ],
   controllers:[AppController],
   providers:[AppService]

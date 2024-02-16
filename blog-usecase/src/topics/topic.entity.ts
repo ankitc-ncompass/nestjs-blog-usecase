@@ -14,6 +14,8 @@ export class Topic {
     @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
     createdAt: Date;
 
-    @ManyToOne(()=>User)
-    user_ : string;
+    @ManyToOne(() => User) 
+    user_: string | null;
+
 }
+

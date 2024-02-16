@@ -25,12 +25,16 @@ export class AuthGuard implements CanActivate {
       if (!authorization) {
         throw new UnauthorizedException('Please provide token');
       }
-
-      const decodedData=this.jwtService.verify(authorization, this.configService.get('JWT_SECRET'));
+      
+      const decodedData=this.jwtService.verify(authorization, {secret:this.configService.get('JWT_SECRET')});
+      
 
       const superAdmin=await this.superAdminRepository.findOne({where:{id:decodedData.userId}})
       const admin=await this.userRepository.findOne({where:{id:decodedData.userId}}) 
-
+      
+      request['id']=decodedData.userId;
+      //console.log(decodedData.userId);
+      
       if(!superAdmin){
         if(decodedData.roleId !== admin.role )
           return false

@@ -16,5 +16,5 @@ export class User {
   password: string;
 
   @ManyToOne(() => Role)
-  role: Role;
+  role: string;
 }

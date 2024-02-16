@@ -8,6 +8,8 @@ export class CustomResponse {
       this.message = message;
       this.data = data;
     }
+
+    
   }
   
   export class CustomError extends Error {

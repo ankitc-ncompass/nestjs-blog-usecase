@@ -1,5 +1,4 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { User } from './users/user.entity';
 import { Role } from './users/role.entity';
@@ -9,6 +8,10 @@ import { SuperAdmin } from './superadmin/superadmin.entity';
 import { Blog } from './blogs/blogs.entity';
 import { TopicAccess } from './topics/topic.access.entity';
 import { BlogAccess } from './blogs/blog.access.entity';
+import {TypeOrmModule } from '@nestjs/typeorm'
+import { SuperAdminModule } from './superadmin/superadmin.module';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
 
 
 @Module({
@@ -25,6 +28,10 @@ import { BlogAccess } from './blogs/blog.access.entity';
       synchronize: true, 
     }),
     UserModule,
+    SuperAdminModule,
   ],
+  controllers:[AppController],
+  providers:[AppService]
 })
 export class AppModule {}
+ 

@@ -28,24 +28,22 @@ export class AuthGuard implements CanActivate {
       
       const decodedData=this.jwtService.verify(authorization, {secret:this.configService.get('JWT_SECRET')});
       
+      
+      const superAdmin=await this.superAdminRepository.findOne({where:{id:decodedData.UserId}})
+      if(superAdmin){
+        request['id']=decodedData.UserId;
+          return true
+      }
 
-      const superAdmin=await this.superAdminRepository.findOne({where:{id:decodedData.userId}})
-      const admin=await this.userRepository.findOne({where:{id:decodedData.userId}}) 
+      const admin = await this.userRepository.findOne({ where: { id: decodedData.userId } });
       
-      request['id']=decodedData.userId;
-      //console.log(decodedData.userId);
-      
-      if(!superAdmin){
-        if(decodedData.roleId !== admin.role )
-          return false
+      if (admin && decodedData.roleId === 'R002') {
+        request['id'] = decodedData.userId;
+        return true;
       }
       
-      if(!admin){
-      if(decodedData.roleId !== superAdmin.role_id  )
-          return false
-      }
-        
-      return true;
+      return false
+      
     } catch (error) {
       throw new ForbiddenException(error.message || 'session expired! Please sign In');
     }

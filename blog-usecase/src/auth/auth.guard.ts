@@ -28,8 +28,9 @@ export class AuthGuard implements CanActivate {
       
       const decodedData=this.jwtService.verify(authorization, {secret:this.configService.get('JWT_SECRET')});
       
+      console.log(decodedData);
       
-      const superAdmin=await this.superAdminRepository.findOne({where:{id:decodedData.UserId}})
+      const superAdmin=await this.superAdminRepository.findOne({where:{id:decodedData.userId}})
       if(superAdmin){
         request['id']=decodedData.UserId;
           return true

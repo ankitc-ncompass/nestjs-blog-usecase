@@ -60,8 +60,9 @@ export class UserService {
       if (!user) {
         throw new CustomError(403, "Email or Password is incorrect");
       }
-      
+
       const token = await this.jwtService.sign({ userId: user.id, roleId:user.role['id'] })
+      
       return token
 
     } catch (error) {

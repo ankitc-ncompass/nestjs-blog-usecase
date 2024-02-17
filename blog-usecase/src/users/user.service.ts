@@ -55,13 +55,13 @@ export class UserService {
 
       loginUserDto.password = md5(loginUserDto.password)
 
-      let user = await this.userRepository.findOne({ where: { email: email, password: loginUserDto.password } });
+      let user = await this.userRepository.findOne({ where: { email: email, password: loginUserDto.password },relations: ['role'] });
 
       if (!user) {
         throw new CustomError(403, "Email or Password is incorrect");
       }
-
-      const token = await this.jwtService.sign({ UserId: user.id, roleId:user.role })
+      
+      const token = await this.jwtService.sign({ userId: user.id, roleId:user.role['id'] })
       return token
 
     } catch (error) {

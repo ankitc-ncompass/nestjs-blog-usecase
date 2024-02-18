@@ -32,7 +32,7 @@ export class AuthGuard implements CanActivate {
       
       const superAdmin=await this.superAdminRepository.findOne({where:{id:decodedData.userId}})
       if(superAdmin){
-        request['id']=decodedData.UserId;
+        request['id']=decodedData.userId;
           return true
       }
 

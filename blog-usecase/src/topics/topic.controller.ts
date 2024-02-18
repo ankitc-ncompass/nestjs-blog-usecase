@@ -26,8 +26,9 @@ export class TopicController{
 
     @UseGuards(AuthGuard)
     @Post('topic-relations')
-    async topicUserRelation(@Body() topicAcessDto:TopicAccessDto){
-            const response= await this.topicService.topicUserRelation(topicAcessDto);
+    async topicUserRelation(@Body() topicAcessDto:TopicAccessDto, @Req() request){
+            const authenticatedOwner=request['id']
+            const response= await this.topicService.topicUserRelation(topicAcessDto,authenticatedOwner);
             return new CustomResponse(200,"Data inserted",response)
     }
 }

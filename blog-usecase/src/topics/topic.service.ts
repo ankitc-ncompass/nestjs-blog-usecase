@@ -49,15 +49,18 @@ export class TopicService {
 
 
 
-    async topicUserRelation(topicAccessDto: TopicAccessDto) {
+    async topicUserRelation(topicAccessDto: TopicAccessDto,autenticatedOwner) {
         try {
-            const topic = await this.topicRepository.findOne({ where: { id: topicAccessDto.topic_ } });
+            const topic = await this.topicRepository.findOne({ where: { id: topicAccessDto.topic_ }, relations: ['user_']});
             const user = await this.userRepository.findOne({ where: { id: topicAccessDto.user_ }, relations: ['role'] });
             const role = await this.roleRepository.findOne({ where: { id: topicAccessDto.role_ } });
 
             //console.log(user);
-            console.log(topic);
+            if(autenticatedOwner !== topic.user_['id']){
+                throw new CustomError(403, "you are not allowed to edit permissions for the topic")
+            }
             //console.log(role);
+            
 
             if(!user){
                 throw new CustomError(403, "user not found")

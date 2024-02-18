@@ -1,4 +1,4 @@
-import { Entity , OneToOne, JoinColumn, PrimaryGeneratedColumn} from 'typeorm';
+import { Entity , OneToOne, JoinColumn, PrimaryGeneratedColumn, ManyToMany, ManyToOne} from 'typeorm';
 import { Topic } from './topic.entity';
 import { Role } from 'src/users/role.entity';
 import { User } from 'src/users/user.entity';
@@ -9,15 +9,15 @@ export class TopicAccess {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @OneToOne(()=> Topic)
+  @ManyToOne(()=> Topic)
   @JoinColumn({ name: 'topic_id' })
-  topic_: string;
+  topic_:Topic | string;
 
-  @OneToOne(()=> User)
+  @ManyToOne(()=> User)
   @JoinColumn({ name: 'user_id' })
-  user_: string;
+  user_: User |string;
 
-  @OneToOne(()=> Role)
+  @ManyToOne(()=> Role)
   @JoinColumn({ name: 'role_id' })
-  role_: string;
+  role_:Role | string;
 }

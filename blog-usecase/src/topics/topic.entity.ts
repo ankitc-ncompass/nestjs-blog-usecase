@@ -1,5 +1,5 @@
 import { User } from "src/users/user.entity";
-import { Column, Entity, OneToMany, PrimaryColumn, ManyToOne } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryColumn, ManyToOne, JoinColumn } from "typeorm";
 @Entity({ name: 'topics' })
 export class Topic {
     @PrimaryColumn()
@@ -14,8 +14,9 @@ export class Topic {
     @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
     createdAt: Date;
 
-    @ManyToOne(() => User) 
-    user_: string | null;
+    @ManyToOne(() => User)
+    @JoinColumn({ name: 'user_id' }) 
+    user_:User| string | null;
 
 }
 

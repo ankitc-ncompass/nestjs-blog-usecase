@@ -2,16 +2,16 @@ import { CanActivate, ExecutionContext, ForbiddenException, Injectable, Unauthor
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
-import { SuperAdmin } from 'src/superadmin/superadmin.entity';
+import { TopicAccess } from 'src/topics/topic.access.entity';
+//import { SuperAdmin } from 'src/superadmin/superadmin.entity';
 import { User } from 'src/users/user.entity';
 import { Repository } from "typeorm";
 
 
 @Injectable()
-export class AuthGuard implements CanActivate {
+export class AuthBlogGuard implements CanActivate {
 
   constructor(private readonly configService: ConfigService,
-    @InjectRepository(SuperAdmin) private superAdminRepository: Repository<SuperAdmin>,
     @InjectRepository(User) private userRepository: Repository<User>,
     private readonly jwtService: JwtService
     ){}
@@ -27,22 +27,13 @@ export class AuthGuard implements CanActivate {
       }
       
       const decodedData=this.jwtService.verify(authorization, {secret:this.configService.get('JWT_SECRET')});
-      
       console.log(decodedData);
       
-      const superAdmin=await this.superAdminRepository.findOne({where:{id:decodedData.userId}})
-      if(superAdmin){
-        request['id']=decodedData.userId;
-          return true
-      }
 
-      const admin = await this.userRepository.findOne({ where: { id: decodedData.userId } });
-      
-      if (admin && decodedData.roleId === 'R002') {
-        request['id'] = decodedData.userId;
-        return true;
+      if(decodedData.roleId === 'R003'){
+        request['id']=decodedData.userId
+        return true
       }
-      
       return false
       
     } catch (error) {
@@ -51,3 +42,4 @@ export class AuthGuard implements CanActivate {
   }
 }
     
+  

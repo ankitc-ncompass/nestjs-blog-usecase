@@ -12,7 +12,6 @@ export class CreateBlogDto {
        description: string;
 
        @IsString()
-       @IsOptional()
        topic_id: string;
 
 }

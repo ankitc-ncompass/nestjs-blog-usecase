@@ -13,6 +13,7 @@ import { SuperAdminModule } from './superadmin/superadmin.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TopicModule } from './topics/topic.module';
+import { BlogModule } from './blogs/blog.module';
 
 
 @Module({
@@ -30,7 +31,8 @@ import { TopicModule } from './topics/topic.module';
     }),
     UserModule,
     SuperAdminModule,
-    TopicModule
+    TopicModule,
+    BlogModule
   ],
   controllers:[AppController],
   providers:[AppService]

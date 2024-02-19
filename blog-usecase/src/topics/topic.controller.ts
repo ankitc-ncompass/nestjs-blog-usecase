@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Req, UseGuards } from "@nestjs/common";
+import { Body, Controller, Post, Req, UseGuards, Get, Param, NotFoundException } from "@nestjs/common";
 import { Topic } from "./topic.entity";
 import { CreateTopicDto } from "./topic.dto";
 import { request } from "express";
@@ -30,5 +30,16 @@ export class TopicController{
             const authenticatedOwner=request['id']
             const response= await this.topicService.topicUserRelation(topicAcessDto,authenticatedOwner);
             return new CustomResponse(200,"Data inserted",response)
+    }
+
+
+    @Get('view-topics')
+    async getAllTopics() {
+      try {
+        const topics = await this.topicService.getTopicDetails();
+        return topics;
+      } catch (error) {
+        throw new NotFoundException('Topics not found');
+      }
     }
 }

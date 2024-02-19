@@ -2,7 +2,7 @@ import { Repository } from "typeorm";
 import { Topic } from "./topic.entity";
 import { InjectRepository } from "@nestjs/typeorm";
 //import { JwtService } from "@nestjs/jwt";
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { CreateTopicDto } from "./topic.dto";
 import { CustomError } from "src/response";
 import { TopicAccess } from "./topic.access.entity";
@@ -77,5 +77,20 @@ export class TopicService {
         } catch (error) {
             throw new CustomError(error.statusCode || 500, error.message)
         }
+    }
+
+    async getTopicDetails(): Promise<Topic[]> {
+    
+            const topic = await this.topicRepository
+            .createQueryBuilder('topic')
+            .innerJoinAndSelect('topic.user_', 'user')
+            .select(['topic.id', 'topic.name', 'topic.description', 'topic.createdAt', 'user.id', 'user.name']) // Select specific fields from both topic and user tables
+            .getMany();
+
+            if (!topic) {
+        throw new NotFoundException('User not found');
+        }
+        
+        return topic;
     }
 }

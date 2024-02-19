@@ -91,5 +91,33 @@ export class blogService {
               } catch (error) {
                      throw new CustomError(error.statusCode || 500, error.message);
               }
-       } 
+       }
+       
+       async deleteBlog(deleteBLogId:string , authenticatedPerson) {
+              try {
+                     const id = deleteBLogId;
+                     const blog = await this.blogRepository.findOne({ where : {id : id}});
+                     if (!blog) {
+                            throw new CustomError(404, "blog not found!");
+                     }
+                     const authorizedData = await this.blogAccessRepository.find({where: {blog_:{id:id}},
+                            relations:['topic_','user_','blog_']});
+
+                     const authorizedPerson = authorizedData[0].user_['id'];
+
+                     if (authorizedPerson !== authenticatedPerson) {
+                            throw new CustomError(404, "unauthorized access!");
+                     }
+
+                     const deletedBlog = await this.blogRepository.createQueryBuilder().delete()
+                     .where("id = :id" , {id : id})
+                     .execute();
+
+                     return deletedBlog;
+                     
+              } catch (error) {
+                     throw new CustomError(error.statusCode || 500, error.message);;
+              }
+       }
+
 }

@@ -14,6 +14,8 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TopicModule } from './topics/topic.module';
 import { BlogModule } from './blogs/blog.module';
+import { APP_FILTER } from '@nestjs/core';
+import { CustomError } from './response';
 
 
 @Module({
@@ -35,7 +37,12 @@ import { BlogModule } from './blogs/blog.module';
     BlogModule
   ],
   controllers:[AppController],
-  providers:[AppService]
+  providers:[AppService,
+     {
+    provide: APP_FILTER,
+    useClass: CustomError,
+  }
+]
 })
-export class AppModule {}
+export class AppModule {} 
  

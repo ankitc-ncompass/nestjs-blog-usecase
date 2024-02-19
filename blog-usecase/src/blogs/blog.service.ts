@@ -102,19 +102,18 @@ export class blogService {
                      }
                      const authorizedData = await this.blogAccessRepository.find({where: {blog_:{id:id}},
                             relations:['topic_','user_','blog_']});
-
-                     const authorizedPerson = authorizedData[0].user_['id'];
-
+                     const authorizedTopic = authorizedData[0].topic_['id'];
+                     const data =  await this.topicRepository.find({where: {id:authorizedTopic},
+                            relations:['user_']});
+                     const authorizedPerson=data[0].user_['id']
                      if (authorizedPerson !== authenticatedPerson) {
                             throw new CustomError(404, "unauthorized access!");
                      }
-
+                     await this.blogAccessRepository.delete({ blog_: id });
                      const deletedBlog = await this.blogRepository.createQueryBuilder().delete()
                      .where("id = :id" , {id : id})
                      .execute();
-
                      return deletedBlog;
-                     
               } catch (error) {
                      throw new CustomError(error.statusCode || 500, error.message);;
               }

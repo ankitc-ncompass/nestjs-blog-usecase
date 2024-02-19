@@ -10,11 +10,14 @@ import { ConfigService } from '@nestjs/config';
 import { User } from 'src/users/user.entity';
 import { TopicAccess } from 'src/topics/topic.access.entity';
 import { BlogAccess } from './blog.access.entity';
+import { SuperAdmin } from 'src/superadmin/superadmin.entity';
+import { AuthGuard } from 'src/auth/auth.guard';
+
 
 @Module({
-    imports: [TypeOrmModule.forFeature([Blog,Topic,User,TopicAccess,BlogAccess]),
+    imports: [TypeOrmModule.forFeature([Blog,Topic,User,TopicAccess,BlogAccess,SuperAdmin]),
   ],
     controllers: [blogController],
-    providers: [blogService,AuthBlogGuard, ConfigService, JwtService],
+    providers: [blogService,AuthBlogGuard, ConfigService, JwtService,AuthGuard],
   })
   export class BlogModule {}

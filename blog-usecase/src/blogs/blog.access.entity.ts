@@ -17,7 +17,7 @@ export class BlogAccess {
   @JoinColumn({name:"user_id"})
   user_:User | string;
 
-  @ManyToOne(()=> Blog)
+  @ManyToOne(()=> Blog, {cascade: true})
   @JoinColumn({name:"blog_id"})
   blog_:Blog | string;
   

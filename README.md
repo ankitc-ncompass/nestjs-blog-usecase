@@ -1,6 +1,8 @@
 # nestjs-blog-usecase
 
 ##End-points:
+(All end-points are in sequential order)
+
 ### 1) Super-Admin Login : http://4.227.243.54:3001/super/login
 ### Request Body: {
     "email": "superadmin@gmail.com",
@@ -45,7 +47,7 @@
         "password": "827ccb0eea8a706c4c34a16891f84e7b"
     }
 }
-### 4) User login (admin, editor): http://4.227.243.54:3001/users/login  
+### 4) User login (admin, editor, viewer): http://4.227.243.54:3001/users/login  
 ### Request Body: {
     "email":"choubey@gmail.com",
     "password":"12345"
@@ -73,7 +75,7 @@
         "user_": "S001"
     }
 }
-### 6) Topic relations with user(owner): http://4.227.243.54:3001/topic/topic-relations   //protected route
+### 6) Topic relations with user(Admin/Superamin i.e. Owner): http://4.227.243.54:3001/topic/topic-relations   //protected route
 ### Request Body: {
     "topic_":"T003",
     "role_":"R003",
@@ -139,6 +141,21 @@
     "statusCode": 200,
     "message": "Blog deleted successfully!",
     "data": {
+        "raw": [],
+        "affected": 1
+    }
+}
+### 10) Update a blog: http://4.227.243.54:3001/blog/update-blog   //protected route
+### Request Body: {
+    "id":"B001",
+    "title":"cricket is a genman's game",
+    "description":"<h1>dabshkvkz</h1>"
+}
+### Response Body: {
+    "statusCode": 200,
+    "message": "Blog updated successfully!",
+    "data": {
+        "generatedMaps": [],
         "raw": [],
         "affected": 1
     }

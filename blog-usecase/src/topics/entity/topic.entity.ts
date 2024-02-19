@@ -1,4 +1,4 @@
-import { User } from "src/users/user.entity";
+import { User } from "src/users/entity/user.entity";
 import { Column, Entity, OneToMany, PrimaryColumn, ManyToOne, JoinColumn } from "typeorm";
 @Entity({ name: 'topics' })
 export class Topic {

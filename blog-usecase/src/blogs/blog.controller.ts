@@ -1,9 +1,9 @@
-import { Body, Controller, Post, Req, UseGuards} from "@nestjs/common";
+import { Body, Controller, Delete, Post, Req, UseGuards} from "@nestjs/common";
 import { CustomResponse } from "src/response";
 import { blogService } from "./blog.service";
 import { CreateBlogDto } from "./blog.dto";
 import { AuthBlogGuard } from "src/auth/auth-blog.guard";
-import { request } from "express";
+import { AuthGuard } from "src/auth/auth.guard";
 
 @Controller('blog')
 export class blogController{
@@ -25,5 +25,13 @@ export class blogController{
               const authenticatedPerson=request['id']
               const updateBLog = await this.blogService.updateBlog(updateBlogDto,authenticatedPerson);
               return new CustomResponse(200 , "Blog updated successfully!" , updateBLog);
+       }
+
+       @UseGuards(AuthGuard)
+       @Delete('delete-blog')
+       async deleteBlog(@Body('blog_id') deleteBlogId : string , @Req() request) {
+              const authenticatedPerson = request['id'];
+              const deleteBlog = await this.blogService.deleteBlog(deleteBlogId,authenticatedPerson);
+              return new CustomResponse(200, "Blog deleted successfully!", deleteBlog);
        }
 }

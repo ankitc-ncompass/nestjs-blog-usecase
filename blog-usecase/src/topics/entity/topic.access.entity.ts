@@ -1,7 +1,7 @@
 import { Entity , OneToOne, JoinColumn, PrimaryGeneratedColumn, ManyToMany, ManyToOne} from 'typeorm';
 import { Topic } from './topic.entity';
-import { Role } from 'src/users/role.entity';
-import { User } from 'src/users/user.entity';
+import { Role } from 'src/users/entity/role.entity';
+import { User } from 'src/users/entity/user.entity';
 
 
 @Entity()

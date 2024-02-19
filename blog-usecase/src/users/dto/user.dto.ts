@@ -1,5 +1,5 @@
 import { IsNotEmpty, IsEmail } from 'class-validator';
-import { Role } from './role.entity';
+import { Role } from '../entity/role.entity';
 
 export class CreateUserDto {
 

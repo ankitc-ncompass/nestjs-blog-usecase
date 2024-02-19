@@ -21,5 +21,5 @@ export class Blog{
     updatedAt: Date;
 
     @ManyToOne(()=>Topic)
-    topic_:string
+    topic_:Topic| string
 }

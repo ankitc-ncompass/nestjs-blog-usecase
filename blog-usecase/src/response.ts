@@ -1,3 +1,5 @@
+import { HttpException } from "@nestjs/common";
+
 export class CustomResponse {
     statusCode: number;
     message: string;
@@ -12,11 +14,15 @@ export class CustomResponse {
     
   }
   
-  export class CustomError extends Error {
+  export class CustomError extends HttpException {
     statusCode: number;
   
     constructor(statusCode: number, message: string) {
-      super(message);
+      super({message, statusCode},statusCode);
+      //console.log(statusCode);
+      
       this.statusCode = statusCode;
+    
+      //console.log(statusCode);
     }
   }

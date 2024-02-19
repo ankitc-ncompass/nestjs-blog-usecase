@@ -12,6 +12,10 @@ import {TypeOrmModule } from '@nestjs/typeorm'
 import { SuperAdminModule } from './superadmin/superadmin.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { TopicModule } from './topics/topic.module';
+import { BlogModule } from './blogs/blog.module';
+import { APP_FILTER } from '@nestjs/core';
+import { CustomError } from './response';
 
 
 @Module({
@@ -29,9 +33,16 @@ import { AppService } from './app.service';
     }),
     UserModule,
     SuperAdminModule,
+    TopicModule,
+    BlogModule
   ],
   controllers:[AppController],
-  providers:[AppService]
+  providers:[AppService,
+     {
+    provide: APP_FILTER,
+    useClass: CustomError,
+  }
+]
 })
-export class AppModule {}
+export class AppModule {} 
  
